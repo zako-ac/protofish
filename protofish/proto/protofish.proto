@@ -1,0 +1,66 @@
+/* Protofish
+ *
+ * Author: MincoMK
+ * Date: 2025-08-30
+ * 
+ * Modification Rules:
+ * 1. Always document in protofish.md.
+ * 2. Always review the content.
+ */
+
+syntax = "proto3";
+
+// Represents a root schema used in a primary channel
+message Message {
+  int32 context_id = 1;
+  Payload payload = 2;
+}
+
+// Represents any payload messages that can traveled via primary channel
+message Payload {
+  oneof payload {
+    Hello hello = 1;
+    OK ok = 2;
+    Error error = 3;
+    AudioStreamOpen audio_stream_open = 4;
+    AudioStreamClose audio_stream_close = 5;
+    ArbitaryData arbitary_data = 6;
+  }
+}
+
+// Handshake initializer
+message Hello {
+  Version version = 1;
+}
+
+// Represents that requests in the context is successfully completed
+message OK {
+}
+
+// Represents the error code and message under the context
+message Error {
+  uint64 code = 1;
+  string message = 2;
+}
+
+// Sent when a new audio stream is initiated.
+message AudioStreamOpen {
+  uint64 stream_id = 1;
+}
+
+// Sent when a new audio stream is destroyed.
+message AudioStreamClose {
+  uint64 stream_id = 1;
+}
+
+// Arbitary data which contains downstream data.
+message ArbitaryData {
+  bytes content = 1;
+}
+
+// Represents the version of the protocol 
+message Version {
+  uint32 major = 1;
+  uint32 minor = 2;
+  uint32 patch = 3;
+}
