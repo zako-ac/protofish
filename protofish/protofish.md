@@ -4,35 +4,50 @@
 Written by MincoMK\
 Dedicated to the one who is an author of the name *Protofish*.
 
-## Why Protofish?
-Before the development of Protofish, traditional HTTP/WS method has been used to handle audio requests from TapHub. Let me briefly explain the various problems we encountered while using it, and how Protofish solved it.\
-Traditional method leveraged a HTTP stream to send an encoded audio stream. It was the simplest and easiest method to transfer streamed audio. However, the easy method shortly unveiled numerous problems. These are some of them.
-
-### TCP Head-of-Line Blocking
-
-
-- TODO: Mention old HTTP/WS method and its problems:
-    - HTTP blocking, unnecessary integrity checks -> solved by UDP
-    - HTTP ACK! Dirty, low library support, needs low level access
-    - Reversed req/res pattern: how to do it without port forwarding! -> solved by a unified connection
-    - and finally.. this is unified in one!
-
 ## Introduction
 Protofish is an intermediate transport layer that abstracts transportation of streams and messages between various zako2 components. Protofish itself does not specify the whole process of data flow, but the guideline to implement Protofish over any upstream protocol.
 
-## Terminology
-- **Protofish** trivial
-- **Upstream Protocol** The protocol in which Protofish is implemented
-- **Server** The place where the upstream protocol is hosted
-- **Client** The place where the upstream protocol connects to the server
-- **Reliable Stream** A network stream that guarantees no byte loss and perfect integrity
-- **Unreliable Stream** A network stream that does not check the packet integrity
-- **Stream Channel** A single isolated logical binary stream
-- **Primary Stream** The first stream channel provided on open
-- **Context** A single session that continues with flowing context pattern
+## Features
+Protofish supports various simple essential features. Take a brief look at them.
 
-## Version Management
-Protofish's version system follows [Semantic Versioning](https://semver.org). Also, it follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) rule.
+### Arbitary Messaging
+Protofish lets you safely send your own binary data through the connection. For example, you can send a data request via Protofish messaging channel.
+
+### Lossy/Loseless Streaming
+Protofish supports both lossy and lossless binary streaming. Once you send a message that notifies open stream, the new independant logical stream is initiated and made it able to send the binary data through it. For example, you can leverage lossy binary stream to send a live audio stream.
+
+### Context Tracking
+With context, you can mix arbitary messaging and streaming. It's possible to send a request for audio by arbitary messaging, and get an audio stream by context.
+
+# Basic Concept
+
+## The System
+
+### Context System
+TODO fix
+Flowing context pattern is a standard messaging pattern in Protofish. Context is a logical boundary that marks the specific communication flow. For example, if you need not only a response, but also an acknoledge or even conversational communication, context solves it. The pattern is achieved by leaving **context ID** to every messages in relation with the context.
+
+## Messages and Payloads
+Message and payload are closely related concepts. It's similar to a REST API. It's used for passing events, simple data, and communicating.
+
+### Payload
+Payload is a concept similar to a schema at a REST endpoint. It has a structured data format. Following list is a list of the payloads.
+- **Hello** The packet that initializes a handshake
+- **OK** Represents the request in the context has been succeeded
+- **Error** Represents the request in the context has been failed
+- **StreamOpen** The packet that opens a new stream
+- **StreamClose** The packet that destroys the existing stream
+- **ArbitaryData** Packet to pass any downstream binary message
+
+### Message
+Message is an envelope for the payload. It contains one of the possible payloads. It's the final serialization format, which is directly sent to the message channel in Protofish.
+
+> **NOTE** It might confusing to distuingish concept of messages and payloads. You can simply understand the payload as a product, and the message as some kind of cardboard box that encloses the product before shipping.
+
+# Specification
+
+- TODO organize 
+Primary stream MUST be used for messaging. Messages MUST be serialized with Google Protocol Buffers, and streamed via [framing rules](#framing). Schema of Message is specified in proto definitions (at `/protos`). Message MUST contain a context ID, and one of the following payloads.
 
 ## Upstream Protocol
 Protofish entirly relies on the upstream protocol. Therefore, strict prerequisites are applied to the upstream protocol. Following list is the prerequisites.
@@ -43,17 +58,11 @@ Protofish entirly relies on the upstream protocol. Therefore, strict prerequisit
     - It MUST have a mechanism to notify the other side that a new stream is created.
     - It MUST have a way to distuingish a stream by ID, regardless of the reliability of the stream.
 
+## Version Management
+Protofish's version system follows [Semantic Versioning](https://semver.org). Also, it follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) rule.
+
 ## The Standard
 Protofish is designed to support adaption into wide range of upstream protocol. However, the recommended implementation setup is QUIC-based upstream protocol, which is specially specified as [QUICFish](/protofish/quicfish.md).
-
-## Message
-Primary stream MUST be used for messaging. Messages MUST be serialized with Google Protocol Buffers, and streamed via [framing rules](#framing). Schema of Message is specified in [protofish.proto](/protofish/proto/protofish.proto). Message contains a context ID, and one of the following payloads.
-- **Hello** The packet that initializes a handshake
-- **OK** Represents the request in the context has been succeeded
-- **Error** Represents the request in the context has been failed
-- **AudioStreamOpen** The packet that opens a new unreliable audio stream
-- **AudioStreamClose** The packet that destroys the existing audio stream
-- **ArbitaryData** Packet to pass any downstream binary message
 
 ### Server Behavior
 TODO: All packets by small heading, specify behavior\
@@ -64,12 +73,19 @@ TODO: specify client or server or both for message list
 ## Overall Communication Diagram
 ### Handshake
 
-### Flowing Context Pattern
-Flowing context pattern is a standard messaging pattern in Protofish. Context is a logical boundary that marks the specific communication flow. For example, all messages in [4-Way Audio Flow](#4-way-audio-request) share the same context. The pattern is achieved by leaving **context ID** to every messages in relation with the context.
-
 ## Framing
 TODO: little endian
 TODO: length, opcode, context id
 
-## Something Specific TODO
-### 4-Way Audio Request
+## Terminology (TODO: separate, highlight noted word)
+- **Protofish** trivial
+- **Upstream Protocol** The protocol in which Protofish is implemented
+- **Server** The place where the upstream protocol is hosted
+- **Client** The place where the upstream protocol connects to the server
+- **Reliable Stream** A network stream that guarantees no byte loss and perfect integrity
+- **Unreliable Stream** A network stream that does not check the packet integrity
+- **Stream Channel** A single isolated logical binary stream
+- **Primary Stream** The first stream channel provided on open
+- **Context** A single session that continues with flowing context pattern
+- **Message Channel** A stream channel used to send payloads
+- **Payload** A unit of data structure passed through the message channel

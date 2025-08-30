@@ -1,0 +1,48 @@
+/* Protofish
+ *
+ * Author: MincoMK
+ * Date: 2025-08-30
+ * 
+ * Modification Rules:
+ * 1. Always document in protofish.md.
+ * 2. Always review the content.
+ */
+
+syntax = "proto3";
+
+package payload;
+
+import "common/schema.proto";
+
+// Handshake initializer
+message Hello {
+  Version version = 1;
+}
+
+// Represents that requests in the context is successfully completed
+message OK {
+}
+
+// Represents the error code and message under the context
+message Error {
+  uint64 code = 1;
+  string message = 2;
+}
+
+// Sent when a new stream is initiated.
+message StreamOpen {
+  uint64 stream_id = 1;
+  common.StreamCreateMeta meta = 2;
+}
+
+// Sent when a new stream is destroyed.
+message StreamClose {
+  uint64 stream_id = 1;
+}
+
+// Arbitary data which contains downstream data.
+message ArbitaryData {
+  bytes content = 1;
+}
+
+// TODO bench

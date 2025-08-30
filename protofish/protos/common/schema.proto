@@ -1,0 +1,31 @@
+/* Protofish
+ *
+ * Author: MincoMK
+ * Date: 2025-08-30
+ * 
+ * Modification Rules:
+ * 1. Always document in protofish.md.
+ * 2. Always review the content.
+ */
+
+syntax = "proto3";
+
+package common;
+
+// Represents the version of the protocol 
+message Version {
+  uint32 major = 1;
+  uint32 minor = 2;
+  uint32 patch = 3;
+}
+
+// Metatdata of a stream create
+message StreamCreateMeta {
+  StreamIntegrityType stream_integrity = 1;
+}
+
+// Type of a stream integrity
+enum StreamIntegrityType {
+  RELIABLE = 1;
+  UNRELIABLE = 2;
+}
