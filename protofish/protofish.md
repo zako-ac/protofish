@@ -17,37 +17,44 @@ Protofish lets you safely send your own binary data through the connection. For 
 Protofish supports both lossy and lossless binary streaming. Once you send a message that notifies open stream, the new independant logical stream is initiated and made it able to send the binary data through it. For example, you can leverage lossy binary stream to send a live audio stream.
 
 ### Context Tracking
-With context, you can mix arbitary messaging and streaming. It's possible to send a request for audio by arbitary messaging, and get an audio stream by context.
+Protofish make it possible to track request and corresponding multiple responses easily.
 
 # Basic Concept
 
-## The System
-
-### Context System
-TODO fix
-Flowing context pattern is a standard messaging pattern in Protofish. Context is a logical boundary that marks the specific communication flow. For example, if you need not only a response, but also an acknoledge or even conversational communication, context solves it. The pattern is achieved by leaving **context ID** to every messages in relation with the context.
-
 ## Messages and Payloads
-Message and payload are closely related concepts. It's similar to a REST API. It's used for passing events, simple data, and communicating.
+Messages and payloads are closely related concepts. It's similar to a REST API. It's used for passing events, simple data, and communicating.
 
 ### Payload
-Payload is a concept similar to a schema at a REST endpoint. It has a structured data format. Following list is a list of the payloads.
-- **Hello** The packet that initializes a handshake
-- **OK** Represents the request in the context has been succeeded
-- **Error** Represents the request in the context has been failed
-- **StreamOpen** The packet that opens a new stream
-- **StreamClose** The packet that destroys the existing stream
-- **ArbitaryData** Packet to pass any downstream binary message
+Payload is a concept similar to a schema at a REST endpoint. It has a structured data format. It's basically a kind of command that makes peer do something. For example, `StreamOpen`, `SocketClose`.
 
 ### Message
 Message is an envelope for the payload. It contains one of the possible payloads. It's the final serialization format, which is directly sent to the message channel in Protofish.
 
 > **NOTE** It might confusing to distuingish concept of messages and payloads. You can simply understand the payload as a product, and the message as some kind of cardboard box that encloses the product before shipping.
 
+## Context System
+Basically, the message channel is *flat*. Client can try to send multiple messages simultaneously, and it's not possible to identify what message is a response to the other message by itself. Once I send a request A to the server, probably I'd want to track and get corresponding response to A. But as I mentioned, since the channel is *flat*, it doesn't guarantee you that the very next message is the response to the request A. This is exactly the reason why context is needed. As soon as I send a request A, a new context is formed. Also all corresponding responses are belonged to the context. Hence we're able to track the corresponding response.\
+Methodologically, we mark every messages with a unique context ID. It makes it possible to track the context.
+
+## Stream Management
+- Mention about stream creation
+
+## Benchmarking
+
 # Specification
 
-- TODO organize 
+- TODO organize
+``
 Primary stream MUST be used for messaging. Messages MUST be serialized with Google Protocol Buffers, and streamed via [framing rules](#framing). Schema of Message is specified in proto definitions (at `/protos`). Message MUST contain a context ID, and one of the following payloads.
+
+Following list is a list of the payloads.
+- **Hello** The packet that initializes a handshake
+- **OK** Represents the request in the context has been succeeded
+- **Error** Represents the request in the context has been failed
+- **StreamOpen** The packet that opens a new stream
+- **StreamClose** The packet that destroys the existing stream
+- **ArbitaryData** Packet to pass any downstream binary message
+``
 
 ## Upstream Protocol
 Protofish entirly relies on the upstream protocol. Therefore, strict prerequisites are applied to the upstream protocol. Following list is the prerequisites.
