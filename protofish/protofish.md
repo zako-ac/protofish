@@ -5,8 +5,15 @@ Written by MincoMK\
 Dedicated to the one who is an author of the name *Protofish*.
 
 ## Why Protofish?
+Before the development of Protofish, traditional HTTP/WS method has been used to handle audio requests from TapHub. Let me briefly explain the various problems we encountered while using it, and how Protofish solved it.\
+Traditional method leveraged a HTTP stream to send an encoded audio stream. It was the simplest and easiest method to transfer streamed audio. However, the easy method shortly unveiled numerous problems. These are some of them.
+
+### TCP Head-of-Line Blocking
+
+
 - TODO: Mention old HTTP/WS method and its problems:
     - HTTP blocking, unnecessary integrity checks -> solved by UDP
+    - HTTP ACK! Dirty, low library support, needs low level access
     - Reversed req/res pattern: how to do it without port forwarding! -> solved by a unified connection
     - and finally.. this is unified in one!
 
