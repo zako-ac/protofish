@@ -1,0 +1,17 @@
+/* Protofish
+ *
+ * Author: MincoMK
+ * Date: 2025-08-30
+ * 
+ * Modification Rules:
+ * 1. Always document in protofish.md.
+ * 2. Always review the content.
+ */
+
+syntax = "proto3";
+
+package common;
+
+message BenchBandwidthParams {
+    // TODO
+}

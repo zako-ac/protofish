@@ -29,5 +29,7 @@ message Payload {
     StreamOpen stream_open = 4;
     StreamClose stream_close = 5;
     ArbitaryData arbitary_data = 6;
+    Keepalive keepalive = 7;
+    KeepaliveAck keepalive_ack = 8;
   }
 }

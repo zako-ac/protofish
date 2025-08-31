@@ -45,4 +45,10 @@ message ArbitaryData {
   bytes content = 1;
 }
 
+// Keepalive request
+message Keepalive {}
+
+// Keepalive acknowledge
+message KeepaliveAck {}
+
 // TODO bench

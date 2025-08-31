@@ -19,7 +19,7 @@ Protofish supports both lossy and lossless binary streaming. Once you send a mes
 ### Context Tracking
 Protofish make it possible to track request and corresponding multiple responses easily.
 
-# Summary of Operation
+# Basic Operational Concept
 In this chapter, we're going to deal with the basic operational concept of Protofish.
 
 ## Messages and Payloads
@@ -43,21 +43,13 @@ Protofish can easily manage multiple parallel binary streams. Streams are identi
 ## Benchmarking
 Based on the experience gained with HTTP/WS, we've learned that benchmark monitoring is a crucial part of achieving reduced latency. So Protofish now has the ability to automatically perform various benchmark tests to assess the performance.
 
----- VERY WIP Under
 # Specification
 
-- TODO organize
-``
-Primary stream MUST be used for messaging. Messages MUST be serialized with Google Protocol Buffers, and streamed via [framing rules](#framing). Schema of Message is specified in proto definitions (at `/protos`). Message MUST contain a context ID, and one of the following payloads.
+## Specifications of Requirements
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC2119.
 
-Following list is a list of the payloads.
-- **Hello** The packet that initializes a handshake
-- **OK** Represents the request in the context has been succeeded
-- **Error** Represents the request in the context has been failed
-- **StreamOpen** The packet that opens a new stream
-- **StreamClose** The packet that destroys the existing stream
-- **ArbitaryData** Packet to pass any downstream binary message
-``
+## Version Management
+Protofish's version system follows [Semantic Versioning](https://semver.org). Also, it follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) rule.
 
 ## Upstream Protocol
 Protofish entirly relies on the upstream protocol. Therefore, strict prerequisites are applied to the upstream protocol. Following list is the prerequisites.
@@ -68,34 +60,32 @@ Protofish entirly relies on the upstream protocol. Therefore, strict prerequisit
     - It MUST have a mechanism to notify the other side that a new stream is created.
     - It MUST have a way to distuingish a stream by ID, regardless of the reliability of the stream.
 
-## Version Management
-Protofish's version system follows [Semantic Versioning](https://semver.org). Also, it follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) rule.
+### Primary Stream
+The very first of the upstream protocol MUST be a reliable stream, which is called **primary stream**. Protofish entirely relies on the primary stream to handle all protocol messages.
 
 ## The Standard
-Protofish is designed to support adaption into wide range of upstream protocol. However, the recommended implementation setup is QUIC-based upstream protocol, which is specially specified as [QUICFish](/protofish/quicfish.md).
+Protofish is designed to support adaptation to a wide range of upstream protocols. However, the recommended implementation setup is QUIC-based upstream protocol, which is specially specified as [QUICFish](/protofish/quicfish.md).
 
-### Server Behavior
-TODO: All packets by small heading, specify behavior\
-TODO: specify client or server or both for message list
+## Summary of Operation
+Protofish follows simple operational rules.
 
-### Client Behavior
+### Protofish Finite State Machine (FSM)
+This section describes the Protofish operation in terms of a Finite State Machine (FSM).
 
-## Overall Communication Diagram
-### Handshake
+## Primary Messaging Channel (PMC)
+Primary stream MUST be used for messaging. Messages MUST follow the [framing rules](#framing) to frame the binary content. Only payloads SHOULD transferred through PMC.
+
+## Payload
+All [payload](#payload)s are defined at [payloads.proto](protos/payload/payloads.proto).
+
+Following list is the payloads and their explanations.
+- **Hello** The packet that initializes a handshake
+- **OK** Represents the request in the context has been succeeded
+- **Error** Represents the request in the context has been failed
+- **StreamOpen** The packet that opens a new stream
+- **StreamClose** The packet that destroys the existing stream
+- **ArbitaryData** Packet to pass any downstream binary message
 
 ## Framing
 TODO: little endian
-TODO: length, opcode, context id
-
-## Terminology (TODO: separate, highlight noted word)
-- **Protofish** trivial
-- **Upstream Protocol** The protocol in which Protofish is implemented
-- **Server** The place where the upstream protocol is hosted
-- **Client** The place where the upstream protocol connects to the server
-- **Reliable Stream** A network stream that guarantees no byte loss and perfect integrity
-- **Unreliable Stream** A network stream that does not check the packet integrity
-- **Stream Channel** A single isolated logical binary stream
-- **Primary Stream** The first stream channel provided on open
-- **Context** A single session that continues with flowing context pattern
-- **Message Channel** A stream channel used to send payloads
-- **Payload** A unit of data structure passed through the message channel
+TODO: length, content
