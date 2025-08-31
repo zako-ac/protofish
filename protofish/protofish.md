@@ -19,7 +19,8 @@ Protofish supports both lossy and lossless binary streaming. Once you send a mes
 ### Context Tracking
 Protofish make it possible to track request and corresponding multiple responses easily.
 
-# Basic Concept
+# Summary of Operation
+In this chapter, we're going to deal with the basic operational concept of Protofish.
 
 ## Messages and Payloads
 Messages and payloads are closely related concepts. It's similar to a REST API. It's used for passing events, simple data, and communicating.
@@ -37,10 +38,12 @@ Basically, the message channel is *flat*. Client can try to send multiple messag
 Methodologically, we mark every messages with a unique context ID. It makes it possible to track the context.
 
 ## Stream Management
-- Mention about stream creation
+Protofish can easily manage multiple parallel binary streams. Streams are identified by their ID. `StreamOpen` and `StreamClose` messages notify the peer the open and close of the stream, respectively. Since they are messages, they also have the ability to track contexts. Therefore, a binary stream can be a response to a request.
 
 ## Benchmarking
+Based on the experience gained with HTTP/WS, we've learned that benchmark monitoring is a crucial part of achieving reduced latency. So Protofish now has the ability to automatically perform various benchmark tests to assess the performance.
 
+---- VERY WIP Under
 # Specification
 
 - TODO organize
