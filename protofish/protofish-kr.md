@@ -1,19 +1,21 @@
 # Protofish
 
 ## Credits
-Written by MincoMK\
-Dedicated to the one who is an author of the name *Protofish*.
+작성자 밍코 (MincoMK)
+ityeri 옮김
 
-## Introduction
-Protofish is an intermediate transport layer that abstracts transportation of streams and messages between various zako2 components. Protofish itself does not specify the whole process of data flow, but the guideline to implement Protofish over any upstream protocol.
+*Protofish* 라는 저자분에게 바칩니다
+
+## 개요
+Protofish는 다양한 zako2 구성 요소 간의 스트림과 메시지 전송을 추상화하는 중간 전송 계층입니다. Protofish 자체는 데이터 흐름의 전체 과정을 명시하는 것이 아니라, 모든 종류의 상위 프로토콜에서 Protofish를 구현하기 위한 지침에 가깝습니다.
 
 ## Features
-Protofish supports various simple essential features. Take a brief look at them.
+Protofish 는 현재 몇가지 간단한 필수 기능이 지원됩니다. 짪게 짚고 넘어가 보겠습니다.
 
-### Arbitary Messaging
-Protofish lets you safely send your own binary data through the connection. For example, you can send a data request via Protofish messaging channel.
+### 임시적 메시징 (Arbitary Messaging)
+Protofish 는 바이너리 데이터를 안전하게 전송할수 있도록 합니다. 예컨데, Protofish 의 메세징 채널을 통해 데이터 요청을 전송할수 있습니다.
 
-### Lossy/Loseless Streaming
+### 손실/무손실 스트리밍
 Protofish supports both lossy and lossless binary streaming. Once you send a message that notifies open stream, the new independant logical stream is initiated and made it able to send the binary data through it. For example, you can leverage lossy binary stream to send a live audio stream.
 
 ### Context Tracking
