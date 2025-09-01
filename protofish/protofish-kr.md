@@ -1,34 +1,33 @@
 # Protofish
 
-## Credits
-작성자 밍코 (MincoMK)
-ityeri 옮김
+## 크레딧
+작성자: MincoMK\
+옮김: Ruma, Try\
+*Protofish* 이름의 저자인 분께 바칩니다.
 
-*Protofish* 라는 저자분에게 바칩니다
+## 소개
+Protofish는 다양한 zako2 구성 요소 간의 스트림과 메시지 전송을 추상화하는 중간 전송 계층입니다. Protofish 자체는 데이터 흐름의 전체 과정을 명시하는 것이 아니라, 모든 업스트림 프로토콜에서 Protofish를 구현하기 위한 지침을 제공합니다.
 
-## 개요
-Protofish는 다양한 zako2 구성 요소 간의 스트림과 메시지 전송을 추상화하는 중간 전송 계층입니다. Protofish 자체는 데이터 흐름의 전체 과정을 명시하는 것이 아니라, 모든 종류의 상위 프로토콜에서 Protofish를 구현하기 위한 지침에 가깝습니다.
+## 특징
+Protofish는 다양하고 간단한 필수 기능을 지원합니다. 간략하게 살펴보겠습니다.
 
-## Features
-Protofish 는 현재 몇가지 간단한 필수 기능이 지원됩니다. 짪게 짚고 넘어가 보겠습니다.
-
-### 임시적 메시징 (Arbitary Messaging)
-Protofish 는 바이너리 데이터를 안전하게 전송할수 있도록 합니다. 예컨데, Protofish 의 메세징 채널을 통해 데이터 요청을 전송할수 있습니다.
+### 임의 메시징
+Protofish를 사용하면 연결을 통해 자신의 바이너리 데이터를 안전하게 전송할 수 있습니다. 예를 들어, Protofish 메시징 채널을 통해 데이터 요청을 전송할 수 있습니다.
 
 ### 손실/무손실 스트리밍
-Protofish supports both lossy and lossless binary streaming. Once you send a message that notifies open stream, the new independant logical stream is initiated and made it able to send the binary data through it. For example, you can leverage lossy binary stream to send a live audio stream.
+Protofish는 손실 바이너리 스트리밍과 무손실 바이너리 스트리밍을 모두 지원합니다. 스트림이 열려 있음을 알리는 메시지를 전송하면 새로운 독립 논리 스트림이 시작되어 이를 통해 바이너리 데이터를 전송할 수 있습니다. 예를 들어, 손실 바이너리 스트림을 활용하여 라이브 오디오 스트림을 전송할 수 있습니다.
 
-### Context Tracking
-Protofish make it possible to track request and corresponding multiple responses easily.
+### 컨텍스트 추적
+Protofish를 사용하면 요청을 추적하고 여러 응답을 쉽게 처리할 수 있습니다.
 
-# Basic Operational Concept
-In this chapter, we're going to deal with the basic operational concept of Protofish.
+# 기본 운영 개념
+이 장에서는 Protofish의 기본 운영 개념을 다루겠습니다.
 
-## Messages and Payloads
-Messages and payloads are closely related concepts. It's similar to a REST API. It's used for passing events, simple data, and communicating.
+## 메시지 및 페이로드
+메시지와 페이로드는 밀접한 관련이 있는 개념입니다. REST API와 유사하며, 이벤트, 단순 데이터 전달 및 통신에 사용됩니다.
 
-### Payload
-Payload is a concept similar to a schema at a REST endpoint. It has a structured data format. It's basically a kind of command that makes peer do something. For example, `StreamOpen`, `SocketClose`.
+### 페이로드
+페이로드는 REST 엔드포인트의 스키마와 유사한 개념입니다. 구조화된 데이터 형식을 가지며, 기본적으로 피어에게 특정 작업을 수행하도록 하는 일종의 명령입니다. 예를 들어 `StreamOpen`, `SocketClose`와 같습니다.
 
 ### Message
 Message is an envelope for the payload. It contains one of the possible payloads. It's the final serialization format, which is directly sent to the message channel in Protofish.
