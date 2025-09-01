@@ -1,10 +1,10 @@
 # Protofish
 
-## Credits
-Written by MincoMK\
-Dedicated to the one who is an author of the name *Protofish*.
+## 크레딧
+작성자: MincoMK\
+*Protofish* 이름의 저자인 분께 바칩니다.
 
-## Introduction
+## 소개
 Protofish is an intermediate transport layer that abstracts transportation of streams and messages between various zako2 components. Protofish itself does not specify the whole process of data flow, but the guideline to implement Protofish over any upstream protocol.
 
 ## Features
