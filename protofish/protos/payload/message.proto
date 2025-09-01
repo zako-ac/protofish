@@ -1,0 +1,38 @@
+/* Protofish
+ *
+ * Author: MincoMK
+ * Date: 2025-08-30
+ * 
+ * Modification Rules:
+ * 1. Always document in protofish.md.
+ * 2. Always review the content.
+ */
+
+syntax = "proto3";
+
+package payload;
+
+import "payload/payloads.proto";
+
+// Represents a root schema used in a primary channel
+message Message {
+  uint64 context_id = 1;
+  Payload payload = 2;
+}
+
+// Represents any payload messages that can traveled via primary channel
+message Payload {
+  oneof payload {
+    ClientHello client_hello = 1;
+    OK ok = 2;
+    Error error = 3;
+    StreamOpen stream_open = 4;
+    StreamClose stream_close = 5;
+    ArbitaryData arbitary_data = 6;
+    Keepalive keepalive = 7;
+    ServerHello server_hello = 8;
+    Close close = 9;
+    BenchmarkStart benchmark_start = 10;
+    BenchmarkEnd benchmark_end = 11;
+  }
+}
