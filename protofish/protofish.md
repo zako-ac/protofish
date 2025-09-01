@@ -193,5 +193,8 @@ Also, benchmark SHOULD be interrupted if early `StreamClose` is received.
 ## Error Handling
 Both sides SHOULD send `Error` message to notify the peer that an error has been occurred. Also, `Close` message MAY followed to close the connection due to a critial error.
 
+## Security Considerations
+A native Protofish implementation is abstract. Therefore it has no need to implement security features. However, upstream protocol MAY support modern authentication system like mTLS.
+
 # Conclusion
 This document comprehensively explained the operation of a simple protocol, Protofish.
