@@ -15,8 +15,16 @@ package payload;
 import "common/schema.proto";
 
 // Handshake initializer
-message Hello {
+message ClientHello {
   Version version = 1;
+  optional bytes resume_connection_token = 2;
+}
+
+// Handshake response
+message ServerHello {
+  Version version = 1;
+  bool ok = 2;
+  optional common.ServerHelloInfo info = 4;
 }
 
 // Represents that requests in the context is successfully completed
@@ -25,7 +33,7 @@ message OK {
 
 // Represents the error code and message under the context
 message Error {
-  uint64 code = 1;
+  ErrorType error_type = 1;
   string message = 2;
 }
 
@@ -48,7 +56,14 @@ message ArbitaryData {
 // Keepalive request
 message Keepalive {}
 
-// Keepalive acknowledge
-message KeepaliveAck {}
+// Close the connection
+message Close {}
 
-// TODO bench
+// Starts a benchamrk
+message BenchmarkStart {
+  common.StreamIntegrityType integrity_type = 1;
+  uint64 byte_count = 2;
+}
+
+// Ends a benchmark
+message BenchmarkEnd {}

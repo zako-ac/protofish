@@ -19,6 +19,12 @@ message Version {
   uint32 patch = 3;
 }
 
+// Represents a connection information after a server hello
+message ServerHelloInfo {
+  uint64 connection_token = 1;
+  bool is_resume = 2;
+}
+
 // Metatdata of a stream create
 message StreamCreateMeta {
   StreamIntegrityType stream_integrity = 1;
@@ -28,4 +34,10 @@ message StreamCreateMeta {
 enum StreamIntegrityType {
   RELIABLE = 1;
   UNRELIABLE = 2;
+}
+
+// Error type
+enum ErrorType {
+  UNKNOWN = 1;
+  TIMEOUT = 2;
 }
