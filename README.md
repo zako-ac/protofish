@@ -2,7 +2,8 @@
 > Dedicated to the one who is an author of the name *Protofish*.
 
 # Protofish
-다중화된 오디오 스트림을 위한 추상 전송 프로토콜
+> ✨🎀 Tragbare Stream Transportation 🎏
+다중화된 바이너리 스트림을 위한 추상 전송 프로토콜
 
 ## 왜 Protofish를 쓰나요?
 Protofish가 고안되기 전까지 TapHub는 전통적인 HTTP/WS 방식을 사용해 오디오 스트림을 전송했습니다. 이는 가장 쉽고 간단한 방법입니다. 그러나, 이 방법은 금새 여러 문제점들의 베일을 벗겨냈습니다. 다음 챕터는 이전 방식의 주요 문제점과 Protofish가 그들을 해결한 방법에 관한 간략한 설명입니다.
