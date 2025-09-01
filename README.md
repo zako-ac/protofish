@@ -30,8 +30,27 @@ Protofish는 Context 시스템을 통해 이 문제를 해결합니다. 프로�
 ### All-in-One
 이 모든 기능이 하나의 프로토콜에 담겨 있습니다. 한 개의 논리적 연결만으로 안정적인 Tap 연결의 유지가 가능합니다.
 
+## Protofish, QUICfish, Zakofish
+Protofish, QUICfish, Zakofish는 모두 다른 개념입니다.
+
+### Protofish
+Protofish는 바이너리 스트림과 데이터를 효율적으로 전송하기 위한 프로토콜입니다. 실시간 오디오나 Zako2에 관한 직접적인 연관은 존재하지 않습니다. 또한, 추상적인 작동 방식의 설명이기에 Protofish 명세만으론 IP기반 네트워크 위에서 동작할 수 없습니다.
+
+### QUICfish
+QUICfish는 Protofish를 콘크리트한 QUIC 프로토콜 위에 구현한 존재입니다. QUICfish는 직접적으로 IP 네트워크 위에서 통신할 수 있습니다.
+
+### Zakofish
+Zakofish는 Zako2 Infrastructure의 전통적인 HTTP/WS 시스템을 보완하기 위해 QUICfish 위에서 동작하도록 설계된 통신 프로토콜입니다. Zakofish는 HTTP기반 Zako2 Tap 통신을 완전히 대체합니다. (단, 하위 호환성을 위해 HTTP/WS 시스템은 보존됩니다.)
+
+## 기여하기
+기술 구현은 물론 번역, 문장 재구성 등을 포함한 모든 종류의 기여는 언제나 환영입니다.
+
+### 주의 사항
+- 문서의 짜임 형태를 보존해주세요.
+- 이해하기 쉽게 작성해주세요.
+
 ## 결론
-Protofish는 Zako2 Infrastructure를 최적화하기 위해 고안되었지만, 실시간 오디오 전송에 특화된 다양한 분야에 사용 가능하도록 최적화되었습니다.\
+Protofish는 Zako2 Infrastructure를 최적화하기 위해 고안되었지만, 실시간 스트림 전송에 특화된 다양한 분야에 사용 가능하도록 최적화되었습니다.\
 그리고 자코는 귀엽습니다.
 
 ## Credits
