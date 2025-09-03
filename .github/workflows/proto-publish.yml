@@ -22,7 +22,7 @@ jobs:
           version: 1.42.0
 
       - name: Authenticate with Buf
-        run: buf login --token $BUF_API_TOKEN
+        run: buf registry login --token $BUF_API_TOKEN
 
       - name: Lint protos before publish
         run: buf lint $PROTO_PATH
