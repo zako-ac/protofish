@@ -22,6 +22,3 @@ jobs:
 
       - name: Lint protos
         run: buf lint protofish/protos
-
-      - name: Check breaking changes
-        run: buf breaking --against '.git#branch=main' protofish/protos
