@@ -24,4 +24,4 @@ jobs:
         run: buf lint protofish/protos
 
       - name: Check breaking changes
-        run: buf breaking --against '.git#branch=main' --path protofish/protos
+        run: buf breaking --against '.git#branch=main' protofish/protos
