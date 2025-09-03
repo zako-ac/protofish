@@ -142,6 +142,16 @@ Message channel is streamed via length delimited frame.
 [ Length (uint64, Little Endian) | Message (binary) ]
 ```
 
+## Context ID Pooling
+A server and a client SHOULD maintain a counter to store a context ID. To resolve a context ID conflict between them, we reserve the LSB of a context ID to indicate a *direction of the initial message within a context*.
+### Context ID Parity Rules
+|LSB|Direction|
+|`0` (Even)|Client &rarr Server|
+|`1` (Odd)|Server &rarr Client|
+Also, context ID `0` is reserved for handshaking. A initial message of a handshake is `ClientHello`, which is Client &rarr Server, does satisfy the parity rules. Although it would be rare, but if the ID counter exceed `UINT64_MAX`, it is generally safe to reset a counter to the base value (`1` for a server, `2` for a client).
+
+> **NOTE** The base value of a client counter is `2`, since the first even number `0` is reserved for a handshake.
+
 ## Handshake Flow
 ```mermaid
 sequenceDiagram
