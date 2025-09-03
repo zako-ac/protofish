@@ -1,0 +1,27 @@
+name: Lint Protobuf
+
+on:
+  push:
+    paths:
+      - 'protofish/protos/**/*.proto'
+  pull_request:
+    paths:
+      - 'protofish/protos/**/*.proto'
+
+jobs:
+  lint-protos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install buf
+        uses: bufbuild/buf-setup-action@v1
+        with:
+          version: 1.42.0
+
+      - name: Lint protos
+        run: buf lint protofish/protos
+
+      - name: Check breaking changes
+        run: buf breaking --against '.git#branch=main' --path protofish/protos
