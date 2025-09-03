@@ -10,7 +10,7 @@
 
 syntax = "proto3";
 
-package common;
+package common.v1;
 
 // Represents the version of the protocol 
 message Version {
@@ -27,17 +27,18 @@ message ServerHelloInfo {
 
 // Metatdata of a stream create
 message StreamCreateMeta {
-  StreamIntegrityType stream_integrity = 1;
+  IntegrityType stream_integrity = 1;
 }
 
 // Type of a stream integrity
-enum StreamIntegrityType {
-  RELIABLE = 0;
-  UNRELIABLE = 1;
+enum IntegrityType {
+  INTEGRITY_TYPE_UNSPECIFIED = 0;
+  INTEGRITY_TYPE_RELIABLE = 1;
+  INTEGRITY_TYPE_UNRELIABLE = 2;
 }
 
 // Error type
 enum ErrorType {
-  UNKNOWN = 0;
-  TIMEOUT = 1;
+  ERROR_TYPE_UNSPECIFIED = 0;
+  ERROR_TYPE_TIMEOUT = 1;
 }
