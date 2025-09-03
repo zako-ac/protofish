@@ -1,0 +1,35 @@
+name: Publish Protobuf to Buf
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROTO_PATH: protofish/protos
+  BUF_API_TOKEN: ${{ secrets.BUF_API_TOKEN }}
+
+jobs:
+  publish-protos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install buf
+        uses: bufbuild/buf-setup-action@v1
+        with:
+          version: 1.42.0
+
+      - name: Authenticate with Buf
+        run: buf login --token $BUF_API_TOKEN
+
+      - name: Lint protos before publish
+        run: buf lint $PROTO_PATH
+
+      - name: Check breaking changes against main
+        run: buf breaking --against '.git#branch=main' $PROTO_PATH
+
+      - name: Publish to Buf
+        run: buf push $PROTO_PATH
+
