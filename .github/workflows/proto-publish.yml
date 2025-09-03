@@ -19,10 +19,8 @@ jobs:
       - name: Install buf
         uses: bufbuild/buf-setup-action@v1
         with:
+          token: ${{ secrets.BUF_API_TOKEN  }}
           version: 1.42.0
-
-      - name: Authenticate with Buf
-        run: buf registry login --token $BUF_API_TOKEN
 
       - name: Lint protos before publish
         run: buf lint $PROTO_PATH
