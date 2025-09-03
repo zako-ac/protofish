@@ -6,7 +6,7 @@ deps:
   - buf.build/bufbuild/protovalidate
 lint:
   use:
-    - BASIC
+    - STANDARD
 breaking:
   use:
     - FILE

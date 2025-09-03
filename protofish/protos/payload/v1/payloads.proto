@@ -10,21 +10,21 @@
 
 syntax = "proto3";
 
-package payload;
+package payload.v1;
 
-import "common/schema.proto";
+import "common/v1/schema.proto";
 
 // Handshake initializer
 message ClientHello {
-  common.Version version = 1;
+  common.v1.Version version = 1;
   optional bytes resume_connection_token = 2;
 }
 
 // Handshake response
 message ServerHello {
-  common.Version version = 1;
+  common.v1.Version version = 1;
   bool ok = 2;
-  optional common.ServerHelloInfo info = 4;
+  optional common.v1.ServerHelloInfo info = 4;
 }
 
 // Represents that requests in the context is successfully completed
@@ -33,14 +33,14 @@ message OK {
 
 // Represents the error code and message under the context
 message Error {
-  common.ErrorType error_type = 1;
+  common.v1.ErrorType error_type = 1;
   string message = 2;
 }
 
 // Sent when a new stream is initiated.
 message StreamOpen {
   uint64 stream_id = 1;
-  common.StreamCreateMeta meta = 2;
+  common.v1.StreamCreateMeta meta = 2;
 }
 
 // Sent when a new stream is destroyed.
@@ -61,7 +61,7 @@ message Close {}
 
 // Starts a benchamrk
 message BenchmarkStart {
-  common.StreamIntegrityType integrity_type = 1;
+  common.v1.IntegrityType integrity_type = 1;
   uint64 byte_count = 2;
 }
 

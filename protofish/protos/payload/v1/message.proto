@@ -10,9 +10,9 @@
 
 syntax = "proto3";
 
-package payload;
+package payload.v1;
 
-import "payload/payloads.proto";
+import "payload/v1/payloads.proto";
 
 // Represents a root schema used in a primary channel
 message Message {
