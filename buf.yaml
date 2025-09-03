@@ -1,0 +1,12 @@
+version: v2
+modules:
+  - path: protofish/protos
+    name: buf.build/zako-ac/protofish
+deps:
+  - buf.build/bufbuild/protovalidate
+lint:
+  use:
+    - BASIC
+breaking:
+  use:
+    - FILE

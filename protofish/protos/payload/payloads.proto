@@ -16,13 +16,13 @@ import "common/schema.proto";
 
 // Handshake initializer
 message ClientHello {
-  Version version = 1;
+  common.Version version = 1;
   optional bytes resume_connection_token = 2;
 }
 
 // Handshake response
 message ServerHello {
-  Version version = 1;
+  common.Version version = 1;
   bool ok = 2;
   optional common.ServerHelloInfo info = 4;
 }
@@ -33,7 +33,7 @@ message OK {
 
 // Represents the error code and message under the context
 message Error {
-  ErrorType error_type = 1;
+  common.ErrorType error_type = 1;
   string message = 2;
 }
 
