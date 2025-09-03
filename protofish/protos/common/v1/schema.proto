@@ -21,7 +21,7 @@ message Version {
 
 // Represents a connection information after a server hello
 message ServerHelloInfo {
-  uint64 connection_token = 1;
+  bytes connection_token = 1;
   bool is_resume = 2;
 }
 
