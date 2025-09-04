@@ -54,15 +54,15 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ## Version Management
 Protofish's version system follows [Semantic Versioning](https://semver.org). Also, it follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) rule.
 
-## Upstream Protocol
-Protofish entirly relies on the upstream protocol. Therefore, strict prerequisites are applied to the upstream protocol. Following list is the prerequisites.
+## Upstream Transport Protocol (UTP)
+Protofish entirly relies on UTP. Therefore, strict prerequisites are applied to UTP. Following list is the prerequisites.
 - **Stability** It MUST guarantee full binary integrity for all reliable streams.
 - **Non-blocking** The stream SHOULD NOT block nor interfere other streams.
 - **Multiplexing** It MUST follow these conditions.
     - It MUST provide a reliable stream, and also an interface to create more isolated streams.
     - It MUST have a mechanism to notify the other side that a new stream is created.
     - It MUST have a way to distuingish a stream by ID, regardless of the reliability of the stream.
-In a perspective of functionality, an upstream protocol SHOULD support these operations.
+In a perspective of functionality, an UTP SHOULD support these operations.
 ### Stream Open
 #### Parameters
 - **Reliability** Whether the stream is reliable or not
@@ -85,10 +85,10 @@ In a perspective of functionality, an upstream protocol SHOULD support these ope
 - **Data** A binary content received
 
 ### Primary Stream
-The very first of the upstream protocol MUST be a reliable stream, which is called **primary stream**. Protofish entirely relies on the primary stream to handle all protocol messages.
+The very first of the UTP MUST be a reliable stream, which is called **primary stream**. Protofish entirely relies on the primary stream to handle all protocol messages.
 
 ## The Standard
-Protofish is designed to support adaptation to a wide range of upstream protocols. However, the recommended implementation setup is QUIC-based upstream protocol, which is specially specified as [QUICfish](quicfish.md).
+Protofish is designed to support adaptation to a wide range of UTPs. However, the recommended implementation setup is QUIC-based UTP, which is specially specified as [QUICfish](quicfish.md).
 
 ## Summary of Operation
 Protofish follows simple operational rules.
@@ -227,7 +227,7 @@ Also, benchmark SHOULD be interrupted if early `StreamClose` is received.
 Both sides SHOULD send `Error` message to notify the peer that an error has been occurred. Also, `Close` message MAY followed to close the connection due to a critial error.
 
 ## Security Considerations
-A native Protofish implementation is abstract. Therefore it has no need to implement security features. However, upstream protocol MAY support modern authentication system like mTLS.
+A native Protofish implementation is abstract. Therefore it has no need to implement security features. However, UTP MAY support modern authentication system like mTLS.
 
 # Conclusion
 This document comprehensively explained the operation of a simple protocol, Protofish.
