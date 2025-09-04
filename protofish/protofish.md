@@ -167,6 +167,7 @@ Message channel is streamed via length delimited frame.
 A server and a client SHOULD maintain a counter to store a context ID. To resolve a context ID conflict between them, we reserve the LSB of a context ID to indicate a *direction of the initial message within a context*.
 ### Context ID Parity Rules
 |LSB|Direction|
+|-|-|
 |`0` (Even)|Client &rarr; Server|
 |`1` (Odd)|Server &rarr; Client|
 
