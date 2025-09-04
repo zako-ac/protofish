@@ -1,5 +1,8 @@
 # Protofish
 
+# NOTE
+이 문서는 미완성입니다.
+
 ## 크레딧
 작성자: MincoMK \
 옮김: Ruma, Try \

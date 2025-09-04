@@ -62,6 +62,27 @@ Protofish entirly relies on the upstream protocol. Therefore, strict prerequisit
     - It MUST provide a reliable stream, and also an interface to create more isolated streams.
     - It MUST have a mechanism to notify the other side that a new stream is created.
     - It MUST have a way to distuingish a stream by ID, regardless of the reliability of the stream.
+In a perspective of functionality, an upstream protocol SHOULD support these operations.
+### Stream Open
+#### Parameters
+- **Reliability** Whether the stream is reliable or not
+#### Returns
+- **ID** A method to identify the stream, internally
+
+### Stream Close
+#### Parameters
+- **ID** An identifier of the stream to close
+
+### Send
+#### Parameters
+- **ID** An identifier of the stream to send
+- **Data** A binary data to send
+
+### Receive
+#### Parameters
+- **ID** An identifier of the stream to receive
+#### Returns
+- **Data** A binary content received
 
 ### Primary Stream
 The very first of the upstream protocol MUST be a reliable stream, which is called **primary stream**. Protofish entirely relies on the primary stream to handle all protocol messages.
