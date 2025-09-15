@@ -24,7 +24,8 @@ message ClientHello {
 message ServerHello {
   common.v1.Version version = 1;
   bool ok = 2;
-  optional common.v1.ServerHelloInfo info = 4;
+  optional bytes connection_token = 3;
+  optional string message = 4;
 }
 
 // Represents that requests in the context is successfully completed

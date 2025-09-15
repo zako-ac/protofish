@@ -237,7 +237,7 @@ Protofish uses a common handshake procedure to exchange the information between 
 Once an upstream connection is established, a client MUST send `ClientHello` to a server.
 
 ### Server-side Hello
-Once a server received `ClientHello`, it MUST immediately respond with `ServerHello`. Field `ok` in `ServerHello` MUST be *true* to indicate a successful handshake and continue. Field `info` in `ServerHello` MUST exist if `ok` is *true*. Otherwise, it MUST be `false` to indicate a rejection. Payload `Error` MAY follow the rejected `ServerHello`.
+Once a server received `ClientHello`, it MUST immediately respond with `ServerHello`. Field `ok` in `ServerHello` MUST be *true* to indicate a successful handshake and continue. Field `connection_token` in `ServerHello` MUST exist if `ok` is *true*. Otherwise, it MUST be `false` to indicate a rejection. A connection with rejected `ServerHello` MAY be closed. Also, field `message` MUST exist if `ok` is *false*.
 
 ### State Transition
 After a successful handshake, both peers SHOULD have a transition to **OPEN** state.
@@ -255,7 +255,7 @@ A server MUST provide a unique connection token in a successful `ServerHello`. A
 ### Behavior
 A server with an accidently closed connection MAY store the client handle with **CLSD** state for a desired time, which is RECOMMENDED to be 15 minutes. A client with an accidently closed connection MAY try to reconnect and resume. A resume operation MUST be done by setting a field `resume_connection_token` to the connection token acquired by `ServerHello` in a previous conenction. A server SHOULD revert the **CLSD** state of a resumed client to **OPEN**, and continue the transmission.
 
-A server MUST set the field `is_resume` under `ServerHello` to indicate that it successfully restored a stream information and is ready to resume the connection. A client SHOULD resume the connection and continue to stream only if the field `is_resume` is *true*.
+A server MUST reject a handshake with `resume_connection_token` in which the server failed to identify the connection token.
 
 ## Keepaliving
 Both sides MAY send a `Keepalive` message to check the liveness of a peer. A peer MUST immediately send `OK` message to the context of the received `Keepalive` message. Both sides MAY choose the frequency of sending a `Keepalive` message and a wait timeout for `OK` message to consider the peer as down. Although it's free to set their own values, but the following is a RECOMMENDED standard.

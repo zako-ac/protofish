@@ -19,12 +19,6 @@ message Version {
   uint32 patch = 3;
 }
 
-// Represents a connection information after a server hello
-message ServerHelloInfo {
-  bytes connection_token = 1;
-  bool is_resume = 2;
-}
-
 // Metatdata of a stream create
 message StreamCreateMeta {
   IntegrityType stream_integrity = 1;
