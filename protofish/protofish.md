@@ -5,7 +5,7 @@ Written by MincoMK\
 Dedicated to the one who is an author of the name *Protofish*.
 
 ## Introduction
-Protofish is an intermediate transport layer that abstracts transportation of streams and messages between various Zako2 components. Protofish itself does not specify the whole process of the flow of data, but a guideline to implement Protofish over any upstream protocol.
+Protofish is an intermediate transport layer that abstracts transportation of streams and messages between various Zako components. Protofish itself does not specify the whole process of the flow of data, but a guideline to implement Protofish over any upstream protocol.
 
 ## Table of Contents
   * [Features](#features)
